@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/bears")
 public class BearToyController {
 
-    private final BearToyService bearToyService;
+    private BearToyService bearToyService;
 
     @Autowired
     public BearToyController(BearToyService bearToyService){
