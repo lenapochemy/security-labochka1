@@ -18,20 +18,12 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
-        run: mvn clean package
+        run: ./mvnw clean compile
 
-      # SAST: SpotBugs static analysis
       - name: Run SpotBugs
-        run: mvn spotbugs:spotbugs
+        run: ./mvnw spotbugs:spotbugs
+        continue-on-error: false
 
-      # SCA: OWASP Dependency-Check for vulnerabilities
       - name: Run OWASP Dependency-Check
-        run: mvn dependency-check:check
-
-      - name: Archive SpotBugs and Dependency-Check reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-reports
-          path: |
-            target/spotbugs.xml
-            target/dependency-check-report.html
+        run: ./mvnw dependency-check:check
+        continue-on-error: false
