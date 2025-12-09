@@ -39,10 +39,11 @@ jobs:
           name: spotbugs-report
           path: target/spotbugsXml.xml
 
-      - name: Snyk test (SCA)
-        uses: snyk/actions/maven@master
-        with:
-          command: test
-          use-Docker: false
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk test
+        run: snyk test --all-projects
