@@ -24,12 +24,6 @@ jobs:
       - name: Ensure mvnw is executable
         run: chmod +x mvnw
 
-      - name: Verify Java and Maven
-        run: |
-          echo "JAVA_HOME=$JAVA_HOME"
-          java -version
-          mvn -version
-
       - name: Build with Maven
         run: mvn clean compile
 
@@ -40,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spotbugs-report
-          path: target/spotbugsXml.xml
+          path: target/spotbugs.html
 
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -51,8 +45,15 @@ jobs:
       - name: Run Snyk test and save report
         run: snyk test --all-projects --json > snyk-report.json
         working-directory: ./
+
+      - name: Install snyk-to-html
+        run: npm install -g snyk-to-html
+
+      - name: Convert Snyk JSON to HTML
+        run: snyk-to-html -i snyk-report.json -o snyk-report.html
+
       - name: Upload Snyk report
         uses: actions/upload-artifact@v4
         with:
           name: snyk-report
-          path: snyk-report.json
+          path: snyk-report.html
