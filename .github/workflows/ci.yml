@@ -21,6 +21,9 @@ jobs:
       - name: Set JAVA_HOME explicitly
         run: echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
 
+      - name: Ensure mvnw is executable
+        run: chmod +x mvnw
+
       - name: Verify Java and Maven
         run: |
           echo "JAVA_HOME=$JAVA_HOME"
@@ -47,3 +50,4 @@ jobs:
 
       - name: Run Snyk test
         run: snyk test --all-projects
+        working-directory: ./
