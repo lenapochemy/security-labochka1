@@ -18,6 +18,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set JAVA_HOME explicitly
+        run: echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
+
       - name: Build with Maven
         run: mvn clean compile
 
