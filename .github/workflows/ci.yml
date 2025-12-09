@@ -21,6 +21,12 @@ jobs:
       - name: Set JAVA_HOME explicitly
         run: echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
 
+      - name: Verify Java and Maven
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version
+          mvn -version
+
       - name: Build with Maven
         run: mvn clean compile
 
