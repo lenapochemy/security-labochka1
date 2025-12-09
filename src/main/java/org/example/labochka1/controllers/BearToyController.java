@@ -1,6 +1,7 @@
 package org.example.labochka1.controllers;
 
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.example.labochka1.dto.BearToyDTO;
 import org.example.labochka1.model.BearToy;
 import org.example.labochka1.services.BearToyService;
@@ -16,7 +17,10 @@ public class BearToyController {
 
     private final BearToyService bearToyService;
 
-//    @Autowired
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Spring-managed service is safe to store"
+    )
     public BearToyController(BearToyService bearToyService){
         this.bearToyService = bearToyService;
     }
