@@ -29,14 +29,7 @@ jobs:
           name: spotbugs-report
           path: target/spotbugsXml.xml
 
-      - name: Run OWASP Dependency-Check
-        run: |
-          mvn org.owasp:dependency-check-maven:check \
-            -Dformat=HTML \
-            -DfailBuildOnCVSS=7
-
-      - name: Upload Dependency-Check report
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-check-report
-          path: target/dependency-check-report.html
+      - name: Snyk test (SCA)
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
